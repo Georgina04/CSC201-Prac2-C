@@ -27,6 +27,30 @@ int getnumbers()
 	return n;
 }
 
+void printticket(int n[])
+{
+	for (int i = 0; i < 6; i++) {
+		cout << n[i];
+		if (i != 5) {
+			cout << ", ";
+		}
+		if (i == 5) {
+			cout << "\n";
+		}
+	}
+}
+
+bool thesame(int n[], int m[])
+{
+	for (int i = 0; i < 6; i++)
+	{
+		if (n[i] != m[i]) {
+			return false;
+		}
+	}
+	return true;
+}
+
 void pickednumbers(int n [])
 {
 
@@ -64,12 +88,31 @@ void pickednumbers(int n [])
 int main()
 {
 	srand(time(NULL));
-	int n[6];
-	pickednumbers(n);
-	for (int i = 0; i < 6; i++)
+	int LottoT[6];
+	int WinningT[6];
+	pickednumbers(LottoT);
+	cout << "Lotto numbers: ";
+	printticket(LottoT);
+	bool found = false;
+	int count = 0;
+
+	clock_t startTime, endTime;
+	
+	startTime = clock();
+	while (found == false)
 	{
-		cout << n[i] << "\n";
+		pickednumbers(WinningT);
+		if (thesame(LottoT, WinningT) == true) {
+			found = true;
+		}
+		count++;
 	}
+	// code to be timed goes here
+	endTime = clock();
+	cout << "Time taken: " << ((double)(endTime - startTime)) / CLOCKS_PER_SEC << "seconds." << endl;
+	cout << "Number of draws: " << count << ";  weeks: " << count / 2 << ";  years: " << (count / 2) / 52 << "\n";
+	cout << "Winning Ticket: ";
+	printticket(WinningT);
 }
 
 
